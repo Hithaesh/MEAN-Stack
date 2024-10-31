@@ -70,6 +70,7 @@
   <mat-card>
     <form (submit)="onAddingPost(postForm)" #postForm="ngForm"> 
       <mat-form-field>
+        <mat-label>Title</mat-label> <!--* Added this for the floating label-->
         <input 
         matInput 
         type="text" 
@@ -86,11 +87,13 @@
         <mat-error *ngIf="title.invalid">Please enter a post title.</mat-error>
       </mat-form-field>
       <mat-form-field>
+        <mat-label>Content</mat-label>
         <textarea 
         matInput 
         rows="6" 
         name="content" 
-        ngModel required 
+        ngModel 
+        required 
         #content="ngModel"></textarea>
         <mat-error *ngIf="content.invalid">Please enter a post content.</mat-error>
       </mat-form-field>
