@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Post } from "./post.model";
+import { Subject } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,9 @@ import { Post } from "./post.model";
 // * Restricts the instantiation of a class to a single instance and provides a global point of access to that instance.
 
 export class PostsService {
-  private Posts : Post[] = [];
+  private Posts : Post[] = []; // Either we have to edit the original array to overcome the problem mentioned in post-list or
+  private postsUpdated = new Subject<Post[]>();
+
 
   getPosts() {
     return [...this.Posts]; 
@@ -22,5 +25,14 @@ export class PostsService {
       content: content,
     };
     this.Posts.push(post);
+    this.postsUpdated.next([...this.Posts]); 
+    // * The functionality is asynchronous and updates the posts array reactively, meaning it operates independently of lifecycle hooks like ngOnInit.
+    // next() method emits the updated data to subscribers. A Subject is a type of observable that can be listened to by specific components that need to react to data changes.
   }
+
+    //Todo: Solutions:
+    //1. We don't need to send a original post, like edit the original array.
+    //2. Event driven approach, EventEmitter, but based on @output Decorator, but here we can use package "RXJS"(Observables) it's Subject
+    //3. Import subject(EventEmitter with broader usage) from 'rxjs'
+
 }
