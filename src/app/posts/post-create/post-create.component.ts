@@ -68,5 +68,10 @@ export class PostCreateComponent {
       return;
     }
     this.postsService.addPost(form.value.title, form.value.content);
+
+    //Todo: Resetting the form
+    form.resetForm();
+
+    //Todo: EDIT, DELETE Button on the expansion panel, in angular material docs there is an Action Bar
   }
 }
