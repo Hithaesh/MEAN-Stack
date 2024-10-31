@@ -1,0 +1,12 @@
+mat-card {
+  padding: 16px;
+}
+
+mat-form-field, 
+textarea {
+  width: 100%;
+}
+
+button {
+  width: 16%;
+}
