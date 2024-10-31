@@ -25,9 +25,15 @@ export class PostsService {
       content: content,
     };
     this.Posts.push(post);
-    this.postsUpdated.next([...this.Posts]); 
-    // * The functionality is asynchronous and updates the posts array reactively, meaning it operates independently of lifecycle hooks like ngOnInit.
+    this.postsUpdated.next([...this.Posts]); //observer
+    // console.log(this.postsUpdated);
+    // * The functionality is asynchronous and sends the posts array reactively, meaning it operates independently of lifecycle hooks like ngOnInit.
     // next() method emits the updated data to subscribers. A Subject is a type of observable that can be listened to by specific components that need to react to data changes.
+  }
+
+  // Todo: Needs to listen to this subject, but it is private so we will create a method
+  getPostUpdatedListener() {
+    return this.postsUpdated.asObservable() // Passing it as an observable
   }
 
     //Todo: Solutions:
