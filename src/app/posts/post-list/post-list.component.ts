@@ -1,13 +1,13 @@
-import { Component, Input} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Post } from '../post.model';
 import { PostsService } from '../posts.service';
 
 @Component({
   selector: 'app-post-list',
   templateUrl: './post-list.component.html',
-  styleUrl: './post-list.component.css'
+  styleUrl: './post-list.component.css',
 })
-export class PostListComponent {
+export class PostListComponent implements OnInit { //! Gotta add "OnInit" here
   // posts = [
   //   {
   //     title: 'First Post',
@@ -31,8 +31,17 @@ export class PostListComponent {
 
   constructor(public postsService: PostsService) {}
 
-  ngOnInit() {
-    this.posts = this.postsService.getPosts();
-  }
+  ngOnInit() {//! We can use constructor to call the service,
+              //! but its a better practice to use lifecycle Hook angular provides when the component is created, it executes automatically.
+              // Recommended to do basic initialization tasks
 
+
+    this.posts = this.postsService.getPosts();
+    // It does not display the data on the UI. Problem here is the posts array is empty in the Service file.
+    // We fetch the posts copy of them before editing them.
+    //Todo: Solutions:
+    //1. We don't need to send a original post, like edit the original array.
+    //2. Event driven approach, EventEmitter, but based on @output Decorator, but here we can use package "RXJS"(Observables) it's Subject
+    //3. Import subject(EventEmitter with broader usage) from 'rxjs'
+  }
 }
