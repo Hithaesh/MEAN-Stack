@@ -14,6 +14,7 @@ import { AppComponent } from './app.component';
 import { PostCreateComponent } from './posts/post-create/post-create.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { HeaderComponent } from './header/header.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { HeaderComponent } from './header/header.component';
     MatButtonModule,
     MatToolbarModule,
     MatExpansionModule,
-    MatFormFieldModule
+    MatFormFieldModule, 
+    HttpClientModule
   ],
   providers: [
     provideAnimationsAsync()

@@ -38,7 +38,7 @@ export class PostListComponent implements OnInit, OnDestroy{ //! Gotta add "OnIn
               // Recommended to do basic initialization tasks
 
 
-    this.posts = this.postsService.getPosts();
+    this.postsService.getPosts(); //! No 'Access-control-allow-orgin' header is present on the requested resource
     // It does not display the data on the UI. Problem here is the posts array is empty in the Service file.
     // We fetch the posts copy of them before editing them.
     //Todo: Solutions:
