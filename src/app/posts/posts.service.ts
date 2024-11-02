@@ -1,6 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Post } from "./post.model";
 import { Subject } from "rxjs";
+import { HttpClient } from "@angular/common/http";
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,15 +14,27 @@ export class PostsService {
   private Posts : Post[] = []; // Either we have to edit the original array to overcome the problem mentioned in post-list or
   private postsUpdated = new Subject<Post[]>();
 
+  constructor(private httpClient: HttpClient) {}
+
 
   getPosts() {
-    return [...this.Posts]; 
+    //return [...this.Posts]; 
     // Here we are using spread operator, but here we are not passing the Posts array because in JS, arrays use reference.
     // So, we create a copy of this array and pass it on, so it won't modify the original array.
+
+    //Todo: Reachout to my Backend, fetch the post and store them in above Posts private array, and fire my updateListener
+    // Send a HTTP Request, angular has httpClient. Import it in module.ts where httpClientModule
+    // Inject Angular HttpService, inside the constructor, uses observable. So need to listen to it so subscribe. Unsubscription will be handled 
+    this.httpClient.get<{message: String, posts: Post[]}>('http://localhost:3000/api/posts').
+    subscribe((postData) => {
+      this.Posts = postData.posts; // No need of duplicating, because it is coming from the server as a HTTP response
+      this.postsUpdated.next([...this.Posts]);
+    })
   }
 
   addPost(title: string, content: string) {
     const post = {
+      id: null,
       title: title,
       content: content,
     };
