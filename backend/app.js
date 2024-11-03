@@ -1,10 +1,13 @@
 // Todo: Install express, and use express
 
 const express = require('express');
-
+const bodyParser = require('body-parser')
 const app = express(); // Returns an express app, big chain of middlewares which is for incoming request
 
 
+//Todo: Adding Body-Parser Middleware, we are doing for all the incoming requests 
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false}));
 
 //Todo: Adding a middleware
 //* .use(req, res, next) 3 arguments, and next function should be called and it moves on to the next middleware function
@@ -43,6 +46,16 @@ app.use((req, res, next) => {
   next();
 })
 
+// Todo: Adding the POST Backend Point
+// Todo: Need to connect angular to this API Endpoint
+app.post('/api/posts', (req, res, next) => {
+  const body = req.body;
+  console.log(body);
+  req.status(201).json({
+    message: "Post added Successfully"
+  })
+})
+
 //Todo: Fetching Posts
 app.use('/api/posts',(req, res, next) => {
   //* Will be adding a new field ID, because Databases always have an id.
@@ -61,7 +74,7 @@ app.use('/api/posts',(req, res, next) => {
   ];
   //res.json(posts);
   res.status(200).json({ // No need of return, because it is the last statement in this function
-    message: 'Posts fetched successfully!',
+    message: 'Post fetched successfully!',
     Posts: post,
   });
   // no need of next()
