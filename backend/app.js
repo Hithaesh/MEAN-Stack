@@ -27,6 +27,21 @@ const app = express(); // Returns an express app, big chain of middlewares which
 //   res.send('Hello from the express!'); //End the response, writingStream
 // })
 
+//Todo: Create a middleware to handle the CORS error, essentially adding headers
+app.use((req, res, next) => {
+  const allowedOrigins = ['http://localhost:4200', 'http://localhost:3000'];
+  const origin = req.header('Origin'); // Gets the origin which is [Protocol://Domain:PORT] from which the request was made.
+
+  if(allowedOrigins.includes(origin)){ // Checks if the incoming request origin is part of the allowedOrigins
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  // res.setHeader('Access-Control-Allow-Origin', "*"); //Todo: One way to do, where * entails it is allowed to all origins
+  // res.setHeader('Access-Control-Allow-Origin', ['http://localhost:4200', 'http://localhost:3000']); //! Accepts only single origin or "*"
+  res.setHeader('Access-Control-Allow-Header', "Origin, X-Requested-With, Content-Type, Accept");
+
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS');
+  next();
+})
 
 //Todo: Fetching Posts
 app.use('/api/posts',(req, res, next) => {
@@ -47,7 +62,7 @@ app.use('/api/posts',(req, res, next) => {
   //res.json(posts);
   res.status(200).json({ // No need of return, because it is the last statement in this function
     message: 'Posts fetched successfully!',
-    posts: post,
+    Posts: post,
   });
   // no need of next()
 })

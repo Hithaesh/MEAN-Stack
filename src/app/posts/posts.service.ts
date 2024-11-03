@@ -25,9 +25,9 @@ export class PostsService {
     //Todo: Reachout to my Backend, fetch the post and store them in above Posts private array, and fire my updateListener
     // Send a HTTP Request, angular has httpClient. Import it in module.ts where httpClientModule
     // Inject Angular HttpService, inside the constructor, uses observable. So need to listen to it so subscribe. Unsubscription will be handled 
-    this.httpClient.get<{message: String, posts: Post[]}>('http://localhost:3000/api/posts').
+    this.httpClient.get<{message: String, Posts: Post[]}>('http://localhost:3000/api/posts').
     subscribe((postData) => {
-      this.Posts = postData.posts; // No need of duplicating, because it is coming from the server as a HTTP response
+      this.Posts = postData.Posts; // No need of duplicating, because it is coming from the server as a HTTP response
       this.postsUpdated.next([...this.Posts]);
     })
   }
