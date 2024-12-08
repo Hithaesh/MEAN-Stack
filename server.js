@@ -1,17 +1,3 @@
-// server.js is responsible only for listening and passing requests to app.js, 
-// while app.js handles the routing, logic, and response.
-
-// const http = require('http');
-// const app = require('./backend/app');
-
-// const port = process.env.PORT || 3000;
-
-// app.set('port', port)
-// const server = http.createServer(app);
-
-// server.listen(port);
-
-
 const app = require("./backend/app");
 const debug = require("debug")("node-angular");
 const http = require("http");
@@ -63,9 +49,5 @@ app.set("port", port);
 const server = http.createServer(app);
 server.on("error", onError);
 server.on("listening", onListening);
+
 server.listen(port);
-
-
-// Install nodemon: npm i --save-dev nodemon
-// package-json: Under scripts -  "start:server" : "nodemon server.js"
-// Terminal: npm run start:server

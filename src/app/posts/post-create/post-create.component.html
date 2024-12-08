@@ -1,106 +1,32 @@
-<!--Todo: Create a template for creating a Post-->
-<!--* We can go with <input> or <text-area> to input more text-->
-<!-- <text-area rows='6'> </text-area> -->
-
-
-<!--Todo: We used property-binding here-->
-<!--* value being the property, we added [value] to become property binding = "ts code"-->
-<!-- <textarea rows="6" [value]="newPost"></textarea> -->
-
-
-<!--Todo: Getting User Input, using Local Reference-->
-<!-- <textarea rows="6" [value]="newPost" #postInput></textarea> -->
-
-
-
-<!--Todo: Another way to set data, two-way binding
-// Combines setting and reading the input, listening, and storing at the same time--> 
-  <!-- <textarea rows="6" [(ngModel)] = "enteredValue"></textarea> -->
-  <!-- <hr> -->
-
-
-  <!--Todo: Event-Binding, angular feature which allows to listen to events-->
-  <!-- (click) = is an attribute, 
-      "function, or a variable"
-      (click) = "method() or variable"
-  -->
-  <!-- <button (click)="onAddPost(postInput)">Save Post</button> -->
-  <!-- <button (click)="onAddingPost()">Save Post</button> -->
-
-
-  <!--Todo: Output the things, to fetch the data user entered-->
-  <!--We are doing with the static content, outputting the value. Feature called "String Interpolation"-->
-  <!-- {{ method() or variable }}-->
-  <!-- <p>{{ newPost }}</p> -->
-
-
-  <!--Todo: To use mat-form library, you need to wrap the contents inside this container-->
-  <!-- <mat-form-field>
-    <textarea rows="6" [(ngModel)] = "enteredValue"></textarea>
-  </mat-form-field> -->
-
-
-  <!--Todo: To use mat-card module so, wrap it up-->
-  <!--Todo: Adding custom styling, for mat-card-->
-  <!-- <mat-card>
+<mat-card>
+  <form (submit)="onAddingPost(postForm)" #postForm="ngForm">
     <mat-form-field>
-      <input matInput type="text" [(ngModel)] ="enteredTitle">
+      <mat-label>Title</mat-label>
+      <input
+        matInput
+        type="text"
+        name="title"
+        ngModel
+        required
+        minlength="3"
+        #title="ngModel"
+      />
+      <mat-error *ngIf="title.invalid">Please enter a post title.</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <textarea matInput rows="6" [(ngModel)] ="enteredContent"></textarea>
+      <mat-label>Content</mat-label>
+      <textarea
+        matInput
+        rows="6"
+        name="content"
+        ngModel
+        required
+        #content="ngModel"
+      ></textarea>
+      <mat-error *ngIf="content.invalid"
+        >Please enter a post content.</mat-error
+      >
     </mat-form-field>
-    <button 
-      mat-raised-button
-      color="primary"
-      (click)="onAddingPost()">Save Post</button>
-  </mat-card> -->
-
-<!--Todo: Adding forms, it's not wrong using two-way-binding, but an alternative way to use when the user clicks on "Save Post"-->
-<!--
-* We can use another mechanism angular provides using forms which is (FormsModule), Import it in ngModule file
-* Automatically creates a JS object behind the scenes, stores the values entered in the form.
-
-* "name attribute" is required, to mention what is the data we are giving it as an input
-* Button: Not manually calling onAddingPost(), rather submit attribute in button will take care of storing the value.
-
-* Now, to use the data, we can use local reference variable to the form, which stores the whole HTML, as we saw above. It has properties, methods acts as an Js Object.
-* We use, ngForm will act as an form object. example: #postForm = "ngForm" 
--->
-
-  <mat-card>
-    <form (submit)="onAddingPost(postForm)" #postForm="ngForm"> 
-      <mat-form-field>
-        <mat-label>Title</mat-label> <!--* Added this for the floating label-->
-        <input 
-        matInput 
-        type="text" 
-        name="title" 
-        ngModel 
-        required 
-        minlength="3" 
-        #title="ngModel">
-
-        <!-- <mat-error *ngIf="postForm.getControl('title').invalid">{{ }}</mat-error> -->
-         <!--* Like how ngForm allowed you to have control over the form, same created a local reference to get allowed to access using ngModel-->
-         <!--* ngModel = It acts as a brigde between template and the component, we link the vlaue of the input to a variable-->
-         
-        <mat-error *ngIf="title.invalid">Please enter a post title.</mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Content</mat-label>
-        <textarea 
-        matInput 
-        rows="6" 
-        name="content" 
-        ngModel 
-        required 
-        #content="ngModel"></textarea>
-        <mat-error *ngIf="content.invalid">Please enter a post content.</mat-error>
-      </mat-form-field>
-      <button 
-        mat-raised-button
-        color="accent"
-        type="submit">Save Post</button>
-    </form>
-  </mat-card>
-
+    <button mat-raised-button color="accent" type="submit">Save Post</button>
+  </form>
+</mat-card>

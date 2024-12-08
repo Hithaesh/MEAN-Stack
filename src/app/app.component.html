@@ -1,15 +1,5 @@
 <app-header></app-header>
 <main>
-  <!-- <app-post-create (postCreated)="onPostAdded($event)"></app-post-create>
-  <app-post-list [posts]="storedPosts" ></app-post-list> -->
-
-<!--Todo: Pass Posts from Post-Create to Post-List-->
-<!--* The current implementation uses the @Input and @Output decorators, which rely on a Parent component(App Component) to facilitate communication-->
-<!--* However, the goal here is to pass data directly between components without using the parent component-->
-<!--* To achieve this, we will use a service as a shared resource to define methods and enable communication between components as needed-->
-<!--* This approach is effective for data sharing between sibling components, create a service file under the POSTS Folder-->
-
   <app-post-create></app-post-create>
   <app-post-list></app-post-list>
-
 </main>
