@@ -33,11 +33,11 @@ export class PostsService {
       .post<{ message: string }>('http://localhost:3000/api/posts', post)
       .subscribe((response) => {
         console.log(response.message);
-        this.Posts.push(post); // Locally storing, but it runs when we get the response only on success
-        this.postsUpdated.next([...this.Posts]); //observer
+        this.Posts.push(post);
+        this.postsUpdated.next([...this.Posts]);
       });
   }
   getPostUpdatedListener() {
-    return this.postsUpdated.asObservable(); // Passing it as an observable
+    return this.postsUpdated.asObservable();
   }
 }
