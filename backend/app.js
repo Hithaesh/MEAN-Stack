@@ -1,37 +1,42 @@
+
 const express = require('express');
-const bodyParser = require('body-parser');
-const app = express(); // Returns an express app, big chain of middlewares which is for incoming request
+const bodyParser = require('body-parser')
+const app = express();
 
-// Adding Body-Parser Middleware for all incoming requests 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+const Post = require('./models/post');
 
-// Create a middleware to handle the CORS error, essentially adding headers
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false}));
+
 app.use((req, res, next) => {
-  const allowedOrigins = ['http://localhost:4200', 'http://localhost:3000'];
-  const origin = req.header('Origin'); // Gets the origin which is [Protocol://Domain:PORT] from which the request was made.
+  // const allowedOrigins = ['http://localhost:4200', 'http://localhost:3000'];
+  // const origin = req.header('Origin');
 
-  if (allowedOrigins.includes(origin)) { // Checks if the incoming request origin is part of the allowedOrigins
-    res.setHeader('Access-Control-Allow-Origin', origin);
-  }
-  
+  // if(allowedOrigins.includes(origin)){
+  //   res.setHeader('Access-Control-Allow-Origin', origin);
+  // }
+  res.setHeader('Access-Control-Allow-Origin', "*");
+
   res.setHeader('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept");
+
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS');
   next();
-});
+})
 
-// Adding the POST Backend Point
+
 app.post('/api/posts', (req, res, next) => {
-  const body = req.body;
-  console.log(body);
+  const post = new Post({
+    title: req.body.title,
+    content: req.body.content,
+  })
+  console.log(post);
   res.status(201).json({
     message: "Post added Successfully"
-  });
-});
+  })
+})
 
-// Fetching Posts
-app.get('/api/posts', (req, res, next) => {
-  const post = [ // Dummy Posts
+app.use('/api/posts',(req, res, next) => {
+  const post = [ 
     {
       id: 'asdadf12324',
       title: 'First server-side post',
@@ -43,11 +48,10 @@ app.get('/api/posts', (req, res, next) => {
       content: 'This is coming from the server!'
     }
   ];
-
   res.status(200).json({
     message: 'Post fetched successfully!',
     Posts: post,
   });
-});
+})
 
 module.exports = app;
