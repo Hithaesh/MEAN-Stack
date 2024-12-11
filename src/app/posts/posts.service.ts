@@ -33,6 +33,10 @@ export class PostsService {
       });
   }
 
+  getPostUpdatedListener() {
+    return this.postsUpdated.asObservable();
+  }
+
   addPost(title: string, content: string) {
     const post = {
       id: null,
@@ -47,7 +51,11 @@ export class PostsService {
         this.postsUpdated.next([...this.Posts]);
       });
   }
-  getPostUpdatedListener() {
-    return this.postsUpdated.asObservable();
+
+  deletePost(postId: string) {
+    this.httpClient.delete('http://localhost:3000/api/posts/' + postId)
+    .subscribe(() => {
+      console.log("Deleted!");
+    })
   }
 }
