@@ -44,9 +44,9 @@ export class PostsService {
       content: content,
     };
     this.httpClient
-      .post<{ message: string }>('http://localhost:3000/api/posts', post)
+      .post<{ message: string, postId: string}>('http://localhost:3000/api/posts', post)
       .subscribe((response) => {
-        console.log(response.message);
+        post.id = response.postId; //* Here we are not changing the data of "const" datatype, we are assigning it.
         this.Posts.push(post);
         this.postsUpdated.next([...this.Posts]);
       });
@@ -60,4 +60,12 @@ export class PostsService {
       this.postsUpdated.next([...this.Posts]);
     })
   }
+
+  //Todo: We can see in the network tab that we are passing id: null
+  //* Condition-1: When creating for the first time, id:null. When we reload, but we are mapping the _id = id so it is not throwing Error.
+  //* Condition-2: When we try to delete it, it is throwing Error as:
+  //! Cast to ObjectId failed for value "null" (type string) at path "_id" for model "Post"
+  //* To resolve: 
+  //* Solution-1: We can call the getPosts() method, once adding the post, but redudant task of updating all the posts when adding 1 post.
+  //* Solution-2: When addding it in DB, let's return the _id alone so we can map it when subscribing to the POST(addPosts method)
 }
