@@ -1,0 +1,18 @@
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: right;
+}
+
+.new-post-styling {
+  color: rgb(255, 64, 129) !important;
+}
+.spacer {
+  flex: 1 1 auto;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
