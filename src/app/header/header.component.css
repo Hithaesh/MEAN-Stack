@@ -1,0 +1,16 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+.text-color {
+  color: rgb(255, 64, 129) !important;
+}
