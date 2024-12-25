@@ -4,8 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
-
-const Post = require('./models/post');
+const postsRoutes = require('./routes/posts');
 
 const app = express();
 
@@ -36,53 +35,6 @@ app.use((req, res, next) => {
   next();
 })
 
-
-app.post('/api/posts', (req, res, next) => {
-  const post = new Post({
-    title: req.body.title,
-    content: req.body.content,
-  })
-  post.save().then((createdPost) => {
-    const id = createdPost._id;
-    res.status(201).json({
-      message: "Post added Successfully",
-      postId: id,
-    })
-  })
-})
-
-app.put('/api/posts/:id', (req, res, next) => {
-  const post = new Post({
-    _id: req.body.id,
-    title: req.body.title,
-    content: req.body.content,
-  });
-  Post.updateOne({ _id: req.params.id }, post).then((result) => {
-    console.log(result);
-    res.status(200).json({
-      message: "Updated Successfully!!"
-    })
-  })
-})
-
-app.get('/api/posts',(req, res, next) => {
-  Post.find()
-  .then(documents => {
-    res.status(200).json({
-      message: 'Post fetched successfully!',
-      Posts: documents,
-    });
-  })
-})
-
-app.delete('/api/posts/:id', (req, res, next) => {
-  Post.deleteOne({ _id: req.params.id }).then((result) => {
-    console.log(result);
-    res.status(200).json({
-      message: "Post deleted"
-    })
-  })
-
-})
+app.use("/api/posts", postsRoutes);
 
 module.exports = app;
