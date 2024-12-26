@@ -10,6 +10,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 import { AppComponent } from './app.component';
@@ -34,7 +35,8 @@ import { HeaderComponent } from './header/header.component';
     MatToolbarModule,
     MatExpansionModule,
     MatFormFieldModule, 
-    HttpClientModule
+    HttpClientModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     provideAnimationsAsync()

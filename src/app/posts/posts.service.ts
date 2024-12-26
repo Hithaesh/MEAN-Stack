@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Post } from './post.model';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
+import { Post } from './post.model';
 @Injectable({
   providedIn: 'root',
 })
@@ -11,7 +12,7 @@ export class PostsService {
   private Posts: Post[] = [];
   private postsUpdated = new Subject<Post[]>();
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient, private router: Router) {}
 
   getPosts() {
     this.httpClient
@@ -53,6 +54,7 @@ export class PostsService {
         post.id = response.postId;
         this.Posts.push(post);
         this.postsUpdated.next([...this.Posts]);
+        this.router.navigate(["/"]);
       });
   }
 
@@ -69,6 +71,10 @@ export class PostsService {
       updatedPosts[oldPostIndex] = post;
       this.Posts = updatedPosts;
       this.postsUpdated.next([...this.Posts]);
+      //Todo: Navigates to the "VIEW MY POST Page"
+      //? We are using the Angular router, router.navigate(), paramters should be same as routerLink
+      //* router.navigate(["/"]) "/" = points to the root page.
+      this.router.navigate(["/"]);
     })
   }
 
@@ -77,7 +83,6 @@ export class PostsService {
     .subscribe(() => {
       const updatedPosts = this.Posts.filter((post) => post.id !== postId);
       this.Posts = updatedPosts;
-      //this.getPosts();
       this.postsUpdated.next([...this.Posts]);
     })
   }
