@@ -24,11 +24,8 @@ export class PostCreateComponent implements OnInit{
       if(paramMap.has('postId')) {
         this.mode = 'edit';
         this.postId = paramMap.get('postId');
-        //Todo: We added it here because we are FETCHING DATA FROM THE SERVER
-        //* Here we are adding the loading spinner so we can see when we are FETCHING THE POST. 
         this.isLoading = true;
         this.postsService.getPost(this.postId).subscribe((postData) => {
-        //* Hide it when we got the RESULT.
           this.isLoading = false;
           this.post = {
             id: postData._id,
@@ -49,16 +46,12 @@ export class PostCreateComponent implements OnInit{
       return;
     }
     this.isLoading = true;
-    //? Reason why we will not update the isLoading = false ?
-    //* Because we will be navigating to the other page. When the component is loaded, isLoading is set to false.
     if(this.mode === 'create'){
       this.postsService.addPost(form.value.title, form.value.content);
     }
     else {
       this.postsService.updatePost(this.postId, form.value.title, form.value.content);
     }
-
-    //Todo: Resetting the form
     form.resetForm();
   }
 }

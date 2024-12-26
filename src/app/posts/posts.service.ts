@@ -71,9 +71,6 @@ export class PostsService {
       updatedPosts[oldPostIndex] = post;
       this.Posts = updatedPosts;
       this.postsUpdated.next([...this.Posts]);
-      //Todo: Navigates to the "VIEW MY POST Page"
-      //? We are using the Angular router, router.navigate(), paramters should be same as routerLink
-      //* router.navigate(["/"]) "/" = points to the root page.
       this.router.navigate(["/"]);
     })
   }
