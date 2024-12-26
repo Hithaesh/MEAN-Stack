@@ -41,7 +41,7 @@ router.get("",(req, res, next) => {
 })
 
 router.get("/:id", (req, res, next) => {
-  Post.findByIndex(req.params.id).then((post) => {
+  Post.findById(req.params.id).then((post) => {
     if(post) {
       res.status(200).json(post);
     } else{
