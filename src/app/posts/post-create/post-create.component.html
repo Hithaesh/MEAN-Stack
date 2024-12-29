@@ -11,18 +11,18 @@
       />
       <mat-error *ngIf="form.get('title').invalid">Please enter a post title.</mat-error>
     </mat-form-field>
-    <div>
-      <!--Todo: Keep it as a button to click, and store this IMAGE as an input-->
-      <!--* Step-1: We connected the input with the button-->
-      <!--* Step-2: Add a event to the input, when changing the form when uploading-->
+    <div class="image-button">
       <button mat-stroked-button type="button" (click)="filePicker.click()">Pick Image</button>
       <input type="file" #filePicker (change)="onImagePicked($event)">
+    </div>
+    <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview">
+      <img [src]="imagePreview" [alt]="form.value.title">
     </div>
     <mat-form-field>
       <mat-label>Content</mat-label>
       <textarea
         matInput
-        rows="6"
+        rows="4"
         formControlName="content"
         placeholder="Post Content"
       ></textarea>
