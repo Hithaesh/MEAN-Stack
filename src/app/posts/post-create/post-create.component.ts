@@ -1,9 +1,10 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Post } from '../post.model';
 import { FormControl, FormGroup, Validators} from '@angular/forms';
-import { PostsService } from '../posts.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+
 import { mimeType } from './mime-type.validator';
+import { PostsService } from '../posts.service';
+import { Post } from '../post.model';
 @Component({
   selector: 'app-post-create',
   templateUrl: './post-create.component.html',

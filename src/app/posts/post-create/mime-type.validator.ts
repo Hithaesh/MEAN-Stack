@@ -1,4 +1,3 @@
-//Todo: Creating this to validate the Image, such as jpeg, png file
 
 import { AbstractControl } from "@angular/forms";
 import { Observable, Observer } from "rxjs";
@@ -6,7 +5,7 @@ import { Observable, Observer } from "rxjs";
 export const mimeType = (control: AbstractControl): Promise<{[key: string]: any}> | Observable<{[key: string]: any}> => {
   const file = control.value as File;
   const fileReader = new FileReader();
-  // fileReader.onloadend = () => {}
+  // fileReader.onloadend = () => {} //! It is a synchronous function.
   const frObs = Observable.create((observer: Observer<{[key: string]: any}>) => {
     fileReader.addEventListener("loadend", () => {
       const arr = new Uint8Array(fileReader.result as ArrayBuffer).subarray(0, 4);
