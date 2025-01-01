@@ -20,11 +20,6 @@ mongoose.connect(mongoDBUri)
 app.use(bodyParser.json()) // used to extract JSON 
 app.use(bodyParser.urlencoded({ extended: false})); //used to extract URL encoded data
 
-//Todo: We need something which can extract a file 
-//* npm install --save multer
-//Todo: How do we use it?
-//* Attach it to the routes, routes/posts.js
-
 
 app.use((req, res, next) => {
   const allowedOrigins = ['http://localhost:4200', 'http://localhost:3000'];
