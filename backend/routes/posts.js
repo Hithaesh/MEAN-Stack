@@ -27,15 +27,22 @@ const storage = multer.diskStorage({
 })
 
 router.post("", multer({storage: storage}).single('image'), (req, res, next) => {
+  const url = req.protocol + "://" + req.get("host");
   const post = new Post({
     title: req.body.title,
     content: req.body.content,
+    imagePath: url + "/images/" + req.file.filename
   })
   post.save().then((createdPost) => {
-    const id = createdPost._id;
+  //! The spread operator works directly on Mongoose objects to extract properties.
+  // We don't necessarily need to call `createdPost.toObject()` unless we want to 
+  // convert the Mongoose object into a plain JavaScript object.
     res.status(201).json({
       message: "Post added Successfully",
-      postId: id,
+      post: {
+        ...createdPost.toObject(), // Explicitly convert to a plain object
+        id: createdPost._id,
+      },
     })
   })
 })
