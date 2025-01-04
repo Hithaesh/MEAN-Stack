@@ -7,10 +7,5 @@ ul {
 }
 
 a {
-  color: white;
   text-decoration: none;
-}
-
-.text-color {
-  color: rgb(255, 64, 129) !important;
 }
