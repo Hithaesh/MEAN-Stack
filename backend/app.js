@@ -1,4 +1,4 @@
-
+const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -19,7 +19,7 @@ mongoose.connect(mongoDBUri)
 
 app.use(bodyParser.json()) // used to extract JSON 
 app.use(bodyParser.urlencoded({ extended: false})); //used to extract URL encoded data
-
+app.use("/images", express.static(path.join("backend/images")));
 
 app.use((req, res, next) => {
   const allowedOrigins = ['http://localhost:4200', 'http://localhost:3000'];

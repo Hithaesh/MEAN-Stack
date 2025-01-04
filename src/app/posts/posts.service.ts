@@ -25,6 +25,7 @@ export class PostsService {
             title: post.title,
             content: post.content,
             id: post._id,
+            imagePath: post.imagePath
           }
         });
       }))
@@ -49,19 +50,19 @@ export class PostsService {
     postData.append("image", image, title);
 
     this.httpClient
-      .post<{ message: string, post: Post}>('http://localhost:3000/api/posts', postData) // Making a POST request to create a new post
-      .subscribe((response) => {  // Subscribe to the observable returned by the POST request
-        const post: Post = { // Mapping the response data into a Post object
+      .post<{ message: string, post: Post}>('http://localhost:3000/api/posts', postData) 
+      .subscribe((response) => {
+        const post: Post = {
           id: response.post.id, 
-          title: title,     // The title comes from the local variable `title` 
-          content: content, // The content comes from the local variable `content`
+          title: title,  
+          content: content, 
           imagePath: response.post.imagePath
         };
-        this.Posts.push(post);// Add the new post to the existing `Posts` array
+        this.Posts.push(post);
 
-        this.postsUpdated.next([...this.Posts]);  // Emit the updated list of posts to any subscribers (e.g., for view update)
+        this.postsUpdated.next([...this.Posts]); 
 
-        this.router.navigate(["/"]);  // Navigate back to the homepage after the post is created
+        this.router.navigate(["/"]); 
       });
   }
 
@@ -70,7 +71,7 @@ export class PostsService {
       id: id,
       title: title,
       content: content,
-      imagePath: null,
+      imagePath: null
     }
     this.httpClient.put('http://localhost:3000/api/posts/' + id, post)
     .subscribe( (response) => {
