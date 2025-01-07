@@ -40,7 +40,7 @@ export class PostsService {
   }
 
   getPost(id: string) {
-    return this.httpClient.get<{_id: string, title: string, content: string}>(`http://localhost:3000/api/posts/${id}`);
+    return this.httpClient.get<{_id: string, title: string, content: string, imagePath: string}>(`http://localhost:3000/api/posts/${id}`);
   }
 
   addPost(title: string, content: string, image: File) {
@@ -66,17 +66,39 @@ export class PostsService {
       });
   }
 
-  updatePost(id: string, title: string, content: string) {
-    const post: Post = {
-      id: id,
-      title: title,
-      content: content,
-      imagePath: null
+  updatePost(id: string, title: string, content: string, image: string | File) {
+    //Todo: Here we have 2 conditions because we might ADD a new image or we don't:
+    //* 1. If we get "STRING IMAGE", then we can send it as a JSON object
+    //* 2. If we get a "FILE", then we have to create a new Form Data
+
+    let postData : Post | FormData;
+    if(typeof(image) === 'object') {
+      //*Note: It's a file, we cannot check ==='File', it returns an object.
+      // Create a new FormData()
+      postData = new FormData();
+      postData.append("id", id);
+      postData.append('title', title)
+      postData.append('content', content)
+      postData.append('image', image, title);
+    } else {
+      postData = {
+        id: id,
+        title: title,
+        content: content,
+        imagePath: image
+      }
     }
-    this.httpClient.put('http://localhost:3000/api/posts/' + id, post)
+    this.httpClient.put('http://localhost:3000/api/posts/' + id, postData)
     .subscribe( (response) => {
       const updatedPosts = [...this.Posts];
-      const oldPostIndex = updatedPosts.findIndex(p => p.id === post.id);
+      const oldPostIndex = updatedPosts.findIndex(p => p.id === id);
+      //Creating a updated post
+      const post: Post = {
+        id: id,
+        title: title,
+        content: content,
+        imagePath: ""
+      }
       updatedPosts[oldPostIndex] = post;
       this.Posts = updatedPosts;
       this.postsUpdated.next([...this.Posts]);
