@@ -67,14 +67,8 @@ export class PostsService {
   }
 
   updatePost(id: string, title: string, content: string, image: string | File) {
-    //Todo: Here we have 2 conditions because we might ADD a new image or we don't:
-    //* 1. If we get "STRING IMAGE", then we can send it as a JSON object
-    //* 2. If we get a "FILE", then we have to create a new Form Data
-
     let postData : Post | FormData;
     if(typeof(image) === 'object') {
-      //*Note: It's a file, we cannot check ==='File', it returns an object.
-      // Create a new FormData()
       postData = new FormData();
       postData.append("id", id);
       postData.append('title', title)
@@ -92,7 +86,6 @@ export class PostsService {
     .subscribe( (response) => {
       const updatedPosts = [...this.Posts];
       const oldPostIndex = updatedPosts.findIndex(p => p.id === id);
-      //Creating a updated post
       const post: Post = {
         id: id,
         title: title,
