@@ -11,7 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
+import { MatPaginatorModule } from '@angular/material/paginator'
 
 
 import { AppComponent } from './app.component';
@@ -38,6 +38,7 @@ import { HeaderComponent } from './header/header.component';
     MatFormFieldModule, 
     HttpClientModule,
     MatProgressSpinnerModule,
+    MatPaginatorModule,
   ],
   providers: [
     provideAnimationsAsync()
