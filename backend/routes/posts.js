@@ -65,17 +65,14 @@ router.put("/:id", multer({storage: storage}).single('image'), (req, res, next) 
 })
 
 router.get("",(req, res, next) => {
-  // This is something different from the "Domain Name", "url", for example: localhost:3000/api/posts?pagesize=2&page=1&something=cool
-  //* console.log(req.query); //* { pagesize=2, page=1, something=cool }
 
-  //Todo: Fetch the Query Parameters
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
   const postQuery = Post.find();
-  if(pageSize && currentPage) { // Can be undefined.
+  if(pageSize && currentPage) {
     postQuery
       .skip( pageSize * (currentPage - 1))
-      .limit(pageSize); //! limit (paramter) must be NUMERIC
+      .limit(pageSize);
   }
   postQuery
   .then(documents => {
